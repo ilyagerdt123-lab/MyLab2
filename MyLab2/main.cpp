@@ -2,8 +2,10 @@
 #include <limits>
 #include <string>
 #include <fstream>
+#include <iterator>
 #include "keeper_aero.h"
 #include "exceptions.h"
+#include "string_utils.h"
 #include <vector>
 
 // вспомогательная функция: разбить текст на предложения (заканчиваются на . ! ?)
@@ -109,7 +111,8 @@ static void part1_interactive() {
                 bool found = false;
                 for (int i = 0; i < k.getSize(); ++i) {
                     AEROFLOT* a = k.getAt(i);
-                    if (a->getPlaneType() == plane) {
+                    // сравнение без учёта регистра
+                    if (iequals(a->getPlaneType(), plane)) {
                         std::cout << "Пункт назначения: " << a->getDestination() << "; Номер рейса: " << a->getFlightNumber() << '\n';
                         found = true;
                     }

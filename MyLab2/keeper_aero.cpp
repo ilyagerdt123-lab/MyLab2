@@ -1,4 +1,5 @@
 #include "keeper_aero.h"
+#include "string_utils.h"
 #include <iostream>
 #include <fstream>
 
@@ -51,7 +52,8 @@ void KeeperAero::insertAt(AEROFLOT* a, int idx) {
 void KeeperAero::add(AEROFLOT* a) {
     if (!a) throw LabException("Попытка добавить нулевой указатель");
     int pos = 0;
-    while (pos < size && items[pos]->getDestination().compare(a->getDestination()) < 0) ++pos;
+    // используем регистронезависимое лексикографическое сравнение по пункту назначения
+    while (pos < size && icompare(items[pos]->getDestination(), a->getDestination()) < 0) ++pos;
     insertAt(a, pos);
 }
 
